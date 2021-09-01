@@ -1,0 +1,85 @@
+<html>
+	<head>
+        <meta http-equiv="Refresh" content="200"> 
+        <title>SpeedTest Results</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+	</head>
+	<body>
+	  <div class="heading1 row justify-content-center heading" ><h1>Speedtest Results</h1> </div>
+	  <div class="container row responsive">
+		 <table id="summary" class="table table-responsive table-striped table-sm">
+			  {% for item_data in summary  %}
+		   	  <tr><td>Average Down Speed</td><td>{{item_data.avg_down_speed}}</td></tr>
+			  <tr><td>Average Up Speed</td><td>{{item_data.avg_up_speed}}</td></tr>
+			  <tr><td>Average Ping</td><td>{{item_data.avg_ping}}</td></tr>
+			  <tr><td>Min Down Speed</td><td>{{item_data.min_down_speed}}</td></tr>
+			  <tr><td>Max Down Speed</td><td>{{item_data.max_down_speed}}</td></tr>
+			  <tr><td>Min Up Speed</td><td>{{item_data.min_up_speed}}</td></tr>
+			  <tr><td>Max Up Speed</td><td>{{item_data.max_up_speed}}</td></tr>
+			  <tr><td>Min Ping</td><td>{{item_data.min_ping}}</td></tr>
+			  <tr><td>Max Ping</td><td>{{item_data.max_ping}}</td></tr>
+			  {% endfor %}
+		 </table>
+
+	  </div>
+	  <div class="container row responsive">
+		  <div class="row col-sm-5 boxlayout">
+		     <form method="post" action="/">
+		      <table id="old_files" class="table table-responsive table-striped table-sm" style="float:left">
+			<thead>
+				<tr>
+					<th> Old Log Files</th>
+				</tr>
+				<tr><th>&nbsp;</th></tr>
+			</thead>
+			<tbody style="overflow-y:scroll; ">
+				 	{% for file_data in old_files %}
+					<tr>
+						<td><input type="submit" value="{{ file_data.name  }}" name="open"/> </td>
+						
+					</tr>
+					{% endfor %}
+				
+			</tbody>
+		      </table>
+		     </form>
+          </div>
+	  <div class="row col-sm-1"></div>
+	  <div class="row col-sm-6 boxlayout">
+	            <table id="data" class="table table-responsive table-striped table-sm" style="float:right" >
+		            <thead>
+                		<tr>
+				    <th>Nr</th>
+                		    <th>Date</th>
+		                    <th>Download Speed</th>
+		                    <th>Upload Speed</th>
+                		    <th>Ping/Latency</th>
+		                </tr>
+		            </thead>
+		            <tbody style="overflow-y:scroll; height:200px" >
+                		{% for log_data in data %}
+				<tr>
+				    <td>{{ log_data.id }} </td>
+                		    <td>{{ log_data.date }}</td>
+				    {% set value = log_data.down.split(".")[0] %} 
+				    {% if value|int < 100 %}
+				    	 <td style="background-color:red;">{{ log_data.down }}</td>
+				    {% else %}
+					    <td>{{ log_data.down }}</td>
+			            {% endif %} 
+				    {% set value = log_data.up.split(".")[0] %}
+				    {% if value|int < 100 %}
+					    <td style="background-color:red;">{{ log_data.up }}</td>
+				    {% else %}
+					    <td>{{ log_data.up }}</td>
+				     {% endif %}
+
+		                    <td>{{ log_data.ping}}</td>
+		                </tr>
+		                {% endfor %}
+		            </tbody>
+	  </div>
+        </div>
+	</body>
+</html>
