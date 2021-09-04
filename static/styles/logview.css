@@ -1,0 +1,18 @@
+#float_right {
+	float:right;
+}
+#fail {
+	background-color:red;
+}
+tbody {
+	overflow-y:scroll;
+	height:200px;
+
+}
+#float_left {
+	float:left;
+}
+
+#float_none {
+	float:none;
+}
