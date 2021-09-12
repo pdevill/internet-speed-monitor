@@ -6,6 +6,9 @@ from pathlib import Path
 import  pandas as pd
 import numpy as np
 from datetime import datetime
+#from  speedtestmonitor import *
+import sys
+#import subproces
 
 class sum_data:
      
@@ -19,6 +22,7 @@ class sum_data:
         self.avg_ping = _avg_ping
         self.min_ping = _min_ping
         self.max_ping = _max_ping
+        self.current_date =  datetime.strftime(datetime.now(),'%Y/%m/%d') 
 
 class file_data:
     def __init__(self, _name):
@@ -52,7 +56,9 @@ def read_csv(csvfile):
 def getFileList(path):
     result = []
     p = Path(path)
-    for name in p.glob('speedtest.*'):
+    files = [] 
+    files =  sorted(p.glob('speedtest.*'), reverse=True )
+    for name in files :
         itemdata = file_data(name)
         result.append(itemdata)
         #print(name)
@@ -94,6 +100,12 @@ def speedTest():
     summary = []
     if request.method == 'POST':
         filename = request.form.get('open')
+        if filename =="Go":
+            filename= filename1
+            #speed_test()
+            os.system('/home/ubuntu/tools/speedtestlog/speedtest.sh')
+            
+                
         #print(filename)
     elif request.method == 'GET':
         filename =filename1#'/var/log/speedtest.log'
