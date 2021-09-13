@@ -60,7 +60,7 @@ def getFileList(path):
     files = [] 
     files =  sorted(p.glob('speedtest.*'), reverse=True )
     for name in files :
-        itemdata = file_data(os.path.basename(name))
+        itemdata = file_data(name)
         result.append(itemdata)
         #print(name)
     return result
@@ -96,8 +96,7 @@ def generate_summary(path, loading):
 @app.route("/", methods=['GET', 'POST'])
 def speedTest():
  #   filename1 ="/var/log/speedtest.log"
-    path =  "/home/ubuntu/tools/speedtestlog/log_files/"
-    filename1 = "speedtest.log"
+    filename1 = "/home/ubuntu/tools/speedtestlog/log_files/speedtest.log"
     filename1 = filename1 + '-' + datetime.strftime(datetime.now(),'%Y%m%d')
     data.clear()  
     old_files =[]
@@ -105,30 +104,30 @@ def speedTest():
     summary = []
     if request.method == 'POST':
         filename = request.form.get('open')
-        print(filename, flush=True )
-        if(filename == None):
-            filename = filename1# .form.get('open2')
+        if filename !="Go" :
+            loading = True
+            filename= filename1
+            #speed_test()
             os.system('/home/ubuntu/tools/speedtestlog/speedtest.sh')
-            print(filename, flush=True)
-         
-    elif request.method == 'GET':
-        filename =filename1#'/var/log/speedtest.log'
+           #time.sleep(30)       
+        elif filename == "Go":
 
+        elif request.method == 'GET':
+            filename =filename1#'/var/log/speedtest.log'
     else:
         filename =filename1#'/var/log/speedtest.log'
 
     #read_csv('/var/log/speedtest.log')
     try:
         if filename == None:
-            filename1 = "speedtest.log"
+            filename1 = "/home/ubuntu/tools/speedtestlog/log_files/speedtest.log"
             filename1 = filename1 + '-' + datetime.strftime(datetime.now(),'%Y%m%d')
         
-        print(filename,path, flush=True)
-        read_csv(path +filename)
+        read_csv(filename)
         #old_files = getFileList('/var/log/')
-        old_files = getFileList(path)
+        old_files = getFileList('/home/ubuntu/tools/speedtestlog/log_files')
         data.sort(reverse=True)
-        summary = generate_summary(path + filename, loading)
+        summary = generate_summary(filename, loading)
     except:
         #speedtest()
         #time.sleep(300)

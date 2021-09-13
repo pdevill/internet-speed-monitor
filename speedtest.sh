@@ -1,2 +1,2 @@
-sudo ./speedtestmonitor.py
-sudo date >> ./log 
+./speedtestmonitor.py
+date >> ./log 

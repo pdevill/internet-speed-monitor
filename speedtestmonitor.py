@@ -4,7 +4,8 @@ import speedtest
 import os
 from datetime import datetime
 def speed_test():
-    logfile = "/var/log/speedtest.log"
+    #logfile = "/var/log/speedtest.log"
+    logfile ="/home/ubuntu/tools/speedtestlog/log_files/speedtest.log"
     filename = logfile + '-' + datetime.strftime(datetime.now(),'%Y%m%d')
 
     isp = speedtest.Speedtest()
